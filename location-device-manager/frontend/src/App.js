@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
 import LocationForm from './LocationForm';
 import DeviceForm from './DeviceForm';
 import LocationList from './LocationList';
@@ -9,11 +10,11 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<LocationForm />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/add-location" element={<LocationForm />} />
                 <Route path="/add-device" element={<DeviceForm />} />
                 <Route path="/locations" element={<LocationList />} />
                 <Route path="/locations/:id" element={<LocationDetails />} />
-                {/* Add other routes here */}
             </Routes>
         </Router>
     );

@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const Location = require('./models/Location.js');
+const Device = require('./models/Device')
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -9,24 +11,6 @@ app.use(bodyParser.json());
 
 // mongoDB connection
 mongoose.connect('mongodb+srv://chathumal:chathumal123@cluster0.isgkc8u.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
-
-// schema and models for location and devices
-const locationSchema = new mongoose.Schema({
-    name: {type: String, required: true },
-    address: {type: String, required: true },
-    phone: {type: String, required: true },
-    devices: [{type: mongoose.Schema.Types.ObjectId, red: 'Device' }]
-});
-
-const deviceSchema = new mongoose.Schema({
-    serialNumber: {type: String, required: true },
-    type: {type: String, enum: ['pos', 'kiosk', 'signage'], required: true },
-    image: String,
-    status: {type: String, enum: ['active', 'inactive'], required: true }
-});
-
-const Location = mongoose.model('Location', locationSchema);
-const Device = mongoose.model('Device', deviceSchema);
 
 //routes
 app.post('/locations', async (req, res) => {
@@ -43,6 +27,26 @@ app.get('/locations', async (req, res) => {
     try{
         const locations = await Location.find().populate('devices');
         res.send(locations);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
+app.post('/devices', async (req, res) => {
+    try {
+        const deviceData = req.body; // Assuming request body contains device data
+        const device = new Device(deviceData);
+        await device.save();
+        res.status(201).send(device);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+app.get('/devices', async (req, res) => {
+    try {
+        const devices = await Device.find();
+        res.send(devices);
     } catch (error) {
         res.status(500).send(error);
     }
