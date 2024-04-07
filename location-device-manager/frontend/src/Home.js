@@ -11,7 +11,7 @@ function Home() {
                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/locations">Locations</a></li>
-                        <li><a href="/devices">Devices</a></li>
+                        <li><a href="/add-device">Devices</a></li>
                         {/* Add more navigation links as needed */}
                     </ul>
                 </nav>

@@ -5,16 +5,32 @@ function LocationForm() {
     const [address, setAddress] = useState('');
     const [phone, setPhone] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        // Handle form submission, e.g., send data to backend API
-        const formData = {
-            name: name,
-            address: address,
-            phone: phone
-        };
-        console.log(formData);
-        // Example: Send formData to backend API using fetch or Axios
+        
+        try {
+            const response = await fetch('/locations', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, address, phone }),
+            });
+
+            if (response.ok) {
+                // Location added successfully
+                console.log('Location added successfully');
+                // Optionally, you can reset the form fields after successful submission
+                setName('');
+                setAddress('');
+                setPhone('');
+            } else {
+                // Handle error
+                console.error('Failed to add location:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error adding location:', error);
+        }
     };
 
     return (

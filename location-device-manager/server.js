@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3001;
 app.use(bodyParser.json());
 
 // mongoDB connection
-mongoose.connect('mongodb+srv://chathumal:chathumal123@cluster0.isgkc8u.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://chathumal:chathumal123@cluster0.isgkc8u.mongodb.net/LMS', { useNewUrlParser: true, useUnifiedTopology: true });
 
 //routes
 app.post('/locations', async (req, res) => {
